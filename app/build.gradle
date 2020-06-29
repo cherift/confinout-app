@@ -13,7 +13,7 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -62,4 +62,6 @@ dependencies {
     // Avoid database implementation error
     kapt 'android.arch.persistence.room:compiler:1.0.0'
     kapt 'androidx.room:room-compiler:2.1.0-alpha04'
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:9.2.0'
+    implementation 'com.android.support:multidex:1.0.3'
 }

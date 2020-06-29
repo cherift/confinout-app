@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Confinout</string>
+    <string name="mapbox_access_token">pk.eyJ1IjoiY2hlcmlmdCIsImEiOiJja2Mwc3ZlNmYxNDgzMnNuNGI0NzZlYXg2In0.EMZ5wwmLVok0KRhz6TKmHw</string>
 </resources>
