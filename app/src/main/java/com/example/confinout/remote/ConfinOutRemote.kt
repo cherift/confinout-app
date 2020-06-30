@@ -11,4 +11,6 @@ class ConfinOutRemote {
 
     fun getEvents() : Single<EventResponse> = service.getEvents()
     fun getNotification(id: Int): Single<NotifResponse> = service.getNotifications(id)
+    fun getComments(id: Int): Single<NotifResponse> = service.getComments(id)
+    fun addComment(id: Int, message: String): Single<String> = service.addComment(id, message)
 }

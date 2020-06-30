@@ -4,11 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.confinout.R
+import com.example.confinout.fragment.MessageView
 import com.example.confinout.fragment.NotifFragment
 import com.example.confinout.holder.NotifHolder
 import com.example.confinout.model.Notif
 
-class NotifAdapter (val fragment: NotifFragment) : RecyclerView.Adapter<NotifHolder>() {
+class NotifAdapter (val messageView: MessageView) : RecyclerView.Adapter<NotifHolder>() {
     var notifications: MutableList<Notif> = mutableListOf<Notif>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotifHolder {

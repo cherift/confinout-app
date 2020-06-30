@@ -11,9 +11,6 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.confinout.R
 import com.example.confinout.model.MyEvent
-import kotlinx.android.synthetic.main.event_details.*
-import org.w3c.dom.Text
-
 class EventDetailsFragments(val event: MyEvent) : Fragment() {
 
     var rootView : View? = null
@@ -55,7 +52,12 @@ class EventDetailsFragments(val event: MyEvent) : Fragment() {
 
         comment!!.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
+                val commentsFragment: CommentsFragment = CommentsFragment.newInstance(event.id)
 
+                activity!!.supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, commentsFragment)
+                    .addToBackStack(null)
+                    .commit()
             }
         })
 

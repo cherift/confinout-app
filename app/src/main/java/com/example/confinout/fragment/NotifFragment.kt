@@ -23,7 +23,7 @@ import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subscribers.ResourceSubscriber
 
-class NotifFragment : Fragment() {
+class NotifFragment : Fragment(), MessageView {
 
     var rootView : View? = null
     var recyclerView : RecyclerView? = null
@@ -51,8 +51,6 @@ class NotifFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        val myHandler: Handler = Handler()
 
         searchFavortiteEvents()
     }

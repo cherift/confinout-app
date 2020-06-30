@@ -22,6 +22,13 @@ interface ConfinOutService {
     @GET("notifications/{event_id}")
     fun getNotifications(@Path("event_id") id: Int) : Single<NotifResponse>
 
+    @GET("comments/{event_id}")
+    fun getComments(@Path("event_id") id: Int) : Single<NotifResponse>
+
+    @GET("comment/{event_id}/{message}")
+    fun addComment(@Path("event_id") id: Int,
+                   @Path("message") message: String) : Single<String>
+
     companion object {
         operator fun invoke() : ConfinOutService {
             val interceptor : HttpLoggingInterceptor = HttpLoggingInterceptor()
