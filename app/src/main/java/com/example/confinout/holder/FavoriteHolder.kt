@@ -5,30 +5,30 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.confinout.R
-import com.example.confinout.adapter.EventAdapter
+import com.example.confinout.adapter.FavoriteAdapter
 import com.example.confinout.model.MyEvent
 
-class EventHolder(val view: View, eventAdapter: EventAdapter) : RecyclerView.ViewHolder(view) {
+class FavoriteHolder(val view: View, favoriteAdapter: FavoriteAdapter) : RecyclerView.ViewHolder(view) {
 
-    var adder : ImageView? =null
+    var remover : ImageView? =null
     var place : TextView? = null
     var description : TextView? = null
     var price : TextView? = null
     var date : TextView? = null
 
     init {
-        adder = view.findViewById(R.id.adder)
-        place = view.findViewById(R.id.place)
-        description = view.findViewById(R.id.description)
-        price = view.findViewById(R.id.price)
-        date = view.findViewById(R.id.date)
+        remover = view.findViewById(R.id.remover)
+        place = view.findViewById(R.id.fav_place)
+        description = view.findViewById(R.id.fav_description)
+        price = view.findViewById(R.id.fav_price)
+        date = view.findViewById(R.id.fav_date)
 
-        adder!!.setOnClickListener(object : View.OnClickListener {
+        remover!!.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 val position: Int = adapterPosition
 
                 if (position != RecyclerView.NO_POSITION) {
-                    eventAdapter.add(position)
+                    favoriteAdapter.remove(position)
                 }
             }
         })

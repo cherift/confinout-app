@@ -11,6 +11,7 @@
         android:layout_height="60dp"
         android:clickable="true"
         app:iconifiedByDefault="false"
+        android:background="@drawable/search_view_custom"
         android:queryHint="Search"
         android:layout_margin="8dp"
         app:layout_constraintTop_toTopOf="parent"

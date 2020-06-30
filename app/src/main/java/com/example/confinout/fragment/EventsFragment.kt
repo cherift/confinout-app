@@ -54,7 +54,10 @@ class EventsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        initListEvents()
+        val myHandler: Handler = Handler()
+        myHandler.postDelayed(Runnable {
+            initListEvents()
+        }, 300)
 
         filter()
     }
@@ -139,7 +142,7 @@ class EventsFragment : Fragment() {
                 }
 
                 override fun onError(e: Throwable) {
-                    println(e.message)
+                    println("Confinout-error : ${e.message}")
                 }
             })
         )

@@ -15,5 +15,5 @@ interface EventDao {
     fun findAll() : Flowable<MutableList<MyEvent>>
 
     @Delete
-    fun delete(game: MyEvent) : Completable
+    fun delete(event: MyEvent) : Completable
 }
