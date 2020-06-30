@@ -1,15 +1,30 @@
 package com.example.confinout.fragment
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.confinout.R
+import com.example.confinout.adapter.EventAdapter
+import com.example.confinout.model.MyEvent
+import com.example.confinout.remote.ConfinOutRemote
+import com.example.confinout.response.EventResponse
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.observers.DisposableSingleObserver
+import io.reactivex.schedulers.Schedulers
 
 class EventsFragment : Fragment() {
 
     var rootView : View? = null
+    var searchView : SearchView? = null
+    var recyclerView : RecyclerView? = null
+    var eventAdapter: EventAdapter? = null
 
     companion object {
         fun newInstance() : EventsFragment  = EventsFragment()
@@ -22,7 +37,83 @@ class EventsFragment : Fragment() {
     ): View? {
 
         rootView = inflater.inflate(R.layout.event_fragment, container, false)
+        searchView = rootView!!.findViewById(R.id.search_view)
+
+        setupRecyclerView()
 
         return rootView
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        initListEvents()
+
+        filter()
+    }
+
+    /**
+     * Sets the associated fragment recycler view.
+     */
+    private fun setupRecyclerView() {
+        recyclerView = rootView!!.findViewById(R.id.events_list_view)
+        eventAdapter = EventAdapter(this)
+        recyclerView!!.adapter = eventAdapter
+
+        val viewManager : LinearLayoutManager = LinearLayoutManager(activity)
+        recyclerView!!.layoutManager = viewManager
+    }
+
+
+    /**
+     * Search for events by using confinout api
+     */
+    private fun initListEvents(){
+        val compositeDisposable : CompositeDisposable = CompositeDisposable()
+
+        val confinoutRemote = ConfinOutRemote()
+
+        compositeDisposable.clear()
+
+        compositeDisposable.add(confinoutRemote.getEvents()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : DisposableSingleObserver<EventResponse>() {
+                override fun onSuccess(response: EventResponse) {
+                    displayEvents(response.events)
+                }
+
+                override fun onError(e: Throwable) {
+                    println("confinout-error: ${e.message} ${e.cause!!.message}")
+                }
+            })
+        )
+    }
+
+    /**
+     * Displays in revycler view the events founded
+     */
+    private fun displayEvents(listEvents: MutableList<MyEvent>){
+        eventAdapter!!.bindViewModels(listEvents)
+    }
+
+
+    /**
+     * filter adapter view form search
+     */
+    private fun filter(){
+        searchView!!.setOnQueryTextListener( object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextSubmit(query: String): Boolean {
+                if (query.isNotEmpty()) {
+                    eventAdapter!!.filter.filter(query as CharSequence)
+                }
+                searchView!!.clearFocus()
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean = false
+
+        })
     }
 }
