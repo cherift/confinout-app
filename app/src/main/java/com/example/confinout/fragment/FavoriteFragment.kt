@@ -120,4 +120,17 @@ class FavoriteFragment : Fragment() {
             })
         )
     }
+
+
+    /**
+     * Calls the fragment that helps to take picture
+     */
+    fun openTakerPicture(event: MyEvent){
+        val takePictureFragment: TakePictureFragment = TakePictureFragment.newInstance(event)
+
+        activity!!.supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, takePictureFragment)
+            .addToBackStack(null)
+            .commit()
+    }
 }

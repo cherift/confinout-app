@@ -3,6 +3,7 @@ package com.example.confinout.holder
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.confinout.R
 import com.example.confinout.adapter.FavoriteAdapter
@@ -15,6 +16,7 @@ class FavoriteHolder(val view: View, favoriteAdapter: FavoriteAdapter) : Recycle
     var description : TextView? = null
     var price : TextView? = null
     var date : TextView? = null
+    var favoriteButton : CardView? = null
 
     init {
         remover = view.findViewById(R.id.remover)
@@ -22,6 +24,7 @@ class FavoriteHolder(val view: View, favoriteAdapter: FavoriteAdapter) : Recycle
         description = view.findViewById(R.id.fav_description)
         price = view.findViewById(R.id.fav_price)
         date = view.findViewById(R.id.fav_date)
+        favoriteButton = view.findViewById(R.id.favoriteButton)
 
         remover!!.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
@@ -29,6 +32,16 @@ class FavoriteHolder(val view: View, favoriteAdapter: FavoriteAdapter) : Recycle
 
                 if (position != RecyclerView.NO_POSITION) {
                     favoriteAdapter.remove(position)
+                }
+            }
+        })
+
+        favoriteButton!!.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                val position: Int = adapterPosition
+
+                if (position != RecyclerView.NO_POSITION) {
+                    favoriteAdapter.openTakerPicture(position)
                 }
             }
         })

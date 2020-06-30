@@ -45,4 +45,8 @@ class FavoriteAdapter(val fragment: FavoriteFragment) : RecyclerView.Adapter<Fav
         fragment.remove(events[position])
     }
 
+    fun openTakerPicture(position: Int){
+        fragment.openTakerPicture(events[position])
+    }
+
 }

@@ -94,7 +94,7 @@ class EventsFragment : Fragment() {
                 }
 
                 override fun onError(e: Throwable) {
-                    println("confinout-error: ${e.message} ${e.cause!!.message}")
+                    println("confinout-error: ${e?.message}")
                 }
             })
         )
