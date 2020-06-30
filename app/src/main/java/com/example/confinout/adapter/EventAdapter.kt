@@ -78,4 +78,6 @@ class EventAdapter(val fragment: EventsFragment) : RecyclerView.Adapter<EventHol
         }
     }
 
+    fun getDetails(position: Int) = fragment.getDetails(events[position])
+
 }

@@ -153,4 +153,19 @@ class EventsFragment : Fragment() {
             Snackbar.LENGTH_SHORT
         ).show()
     }
+
+
+    /**
+     * Open new fragment to see the details of and event
+     *
+     * @param event: the event to see a details
+     */
+    fun getDetails(event: MyEvent){
+        val detailsFragments: EventDetailsFragments = EventDetailsFragments.newInstance(event)
+
+        activity!!.supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, detailsFragments)
+            .addToBackStack(null)
+            .commit()
+    }
 }
