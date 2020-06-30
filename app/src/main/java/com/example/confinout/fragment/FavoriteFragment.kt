@@ -109,7 +109,6 @@ class FavoriteFragment : Fragment() {
             .subscribeWith(object : ResourceSubscriber<MutableList<MyEvent>>() {
 
                 override fun onNext(events : MutableList<MyEvent>) {
-                    println("coucou ${events.size}")
                     favoriteAdapter!!.bindViewModels(events)
                 }
 
