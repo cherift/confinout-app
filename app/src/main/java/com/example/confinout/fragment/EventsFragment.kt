@@ -11,11 +11,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.confinout.R
 import com.example.confinout.adapter.EventAdapter
+import com.example.confinout.database.EventDao
+import com.example.confinout.database.EventDataBase
 import com.example.confinout.model.MyEvent
 import com.example.confinout.remote.ConfinOutRemote
 import com.example.confinout.response.EventResponse
+import com.google.android.material.snackbar.Snackbar
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.observers.DisposableCompletableObserver
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 
@@ -25,6 +29,7 @@ class EventsFragment : Fragment() {
     var searchView : SearchView? = null
     var recyclerView : RecyclerView? = null
     var eventAdapter: EventAdapter? = null
+    var eventDao: EventDao? = null
 
     companion object {
         fun newInstance() : EventsFragment  = EventsFragment()
@@ -40,6 +45,8 @@ class EventsFragment : Fragment() {
         searchView = rootView!!.findViewById(R.id.search_view)
 
         setupRecyclerView()
+
+        eventDao = EventDataBase.getInstance(activity!!.application).eventDao()
 
         return rootView
     }
@@ -115,5 +122,32 @@ class EventsFragment : Fragment() {
             override fun onQueryTextChange(newText: String?): Boolean = false
 
         })
+    }
+
+    fun addEvent(event: MyEvent){
+        val compositeDisposable : CompositeDisposable = CompositeDisposable()
+
+        compositeDisposable.clear()
+
+        compositeDisposable.add(eventDao!!.insert(event)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : DisposableCompletableObserver() {
+
+                override fun onComplete() {
+                    println("The event at ${event.place} has been added to the database.")
+                }
+
+                override fun onError(e: Throwable) {
+                    println(e.message)
+                }
+            })
+        )
+
+        Snackbar.make(
+            recyclerView!!,
+            "The event at ${event.place} has been added in your favourites",
+            Snackbar.LENGTH_SHORT
+        ).show()
     }
 }

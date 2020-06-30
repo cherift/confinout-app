@@ -47,7 +47,7 @@ class EventAdapter(val fragment: EventsFragment) : RecyclerView.Adapter<EventHol
     }
 
     fun add(position: Int){
-
+        fragment.addEvent(events[position])
     }
 
     override fun getFilter(): Filter {
